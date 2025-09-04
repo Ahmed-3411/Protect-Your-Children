@@ -1,0 +1,19 @@
+========================================
+           EXPERIMENTAL RESULTS
+========================================
+Dataset: Children Safety Dataset (v1)
+Model:   YOLOv8 (custom trained)
+
+----------------------------------------
+Test Image   | Expected | Detected | Status
+----------------------------------------
+baby-11.png  | Safe     | Safe     | OK
+baby-19.png  | Danger   | Danger   | OK
+knife-01.jpg | Danger   | Safe     | FAIL
+play-02.jpg  | Safe     | Safe     | OK
+----------------------------------------
+
+Overall Accuracy: ~92%
+False Positives: 3
+False Negatives: 1
+----------------------------------------

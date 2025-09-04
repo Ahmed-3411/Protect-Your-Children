@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 3
+names: ['children', 'children-sharptool', 'sharptool']
+
+roboflow:
+  workspace: ertg
+  project: children-model
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/ertg/children-model/dataset/1

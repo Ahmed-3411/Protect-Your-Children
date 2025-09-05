@@ -76,16 +76,12 @@ Example interface:
 
 ## 🚀 Quick Start
 
-### 1) Clone & Install
-```bash
 
-
-
-- 🗂 Project Structure
+📂 Project Structure
 ProtectYourChildren/
 │── arduino/child_safety.ino        # Arduino firmware (servo + buzzer + ultrasonic)
 │── ai/child_safety_ai.py           # YOLOv8 real-time detection + serial comm
-│── gui/app.py                       # Streamlit GUI (upload images)
+│── gui/app.py                      # Streamlit GUI (upload images)
 │── model/yolov8n.pt                # YOLO weights (place here or download externally)
 │── results/sample.jpg
 │── project_results/confusion_matrix.png
@@ -94,3 +90,24 @@ ProtectYourChildren/
 │── requirements.txt
 │── README.md
 │── LICENSE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 1) Clone & Install
+```bash
+
+
+
+

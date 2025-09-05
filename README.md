@@ -4,11 +4,11 @@
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-0A0A0A?logo=ultralytics)](#)
 [![Arduino](https://img.shields.io/badge/Arduino-Mega-00979D?logo=arduino&logoColor=white)](#)
 [![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5C3EE8?logo=opencv&logoColor=white)](#)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Optional-FF4B4B?logo=streamlit&logoColor=white)](#)
+[![Streamlit](https://img.shields.io/badge/Streamlit-GUI-FF4B4B?logo=streamlit&logoColor=white)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **EN:** An intelligent safety system that detects children near windows or holding sharp objects and triggers alarms/actuators.  
-> **AR:** نظام ذكي لحماية الأطفال عبر الرؤية الحاسوبية والتحكم بالأجهزة (Arduino) لإطلاق تنبيه وإغلاق النافذة عند الاقتراب أو عند اكتشاف أداة حادة.
+> **Protect Your Children** is an AI + IoT prototype that detects children near dangerous zones (e.g., windows, balconies) or holding sharp objects.  
+> It triggers **alerts/actuators** via Arduino to prevent accidents.
 
 ---
 
@@ -16,51 +16,60 @@
 - [Overview](#-overview)
 - [Features](#-features)
 - [Demo](#-demo)
-- [Project Structure](#-project-structure)
-- [Hardware](#-hardware)
-- [Wiring (Arduino Mega)](#-wiring-arduino-mega)
-- [Software Requirements](#-software-requirements)
+- [GUI](#-gui)
 - [Quick Start](#-quick-start)
-- [GUI (Optional)](#-gui-optional)
-- [Notebook Demo](#-notebook-demo)
-- [Model Weights & Dataset](#-model-weights--dataset)
-- [Training (Custom Data)](#-training-custom-data)
-- [Evaluation](#-evaluation)
-- [Troubleshooting](#-troubleshooting)
-- [Security & Privacy](#-security--privacy)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [Project Structure](#-project-structure)
+- [Requirements](#-requirements)
 - [Authors](#-authors)
+- [License](#-license)
 
 ---
 
 ## 🔎 Overview
-The project combines **AI (YOLOv8)** with **IoT (Arduino)** to:
-- Detect **children** near risky zones (e.g., windows, balconies).
-- Detect **sharp objects** (e.g., knife/scissors) in a child's hand.
-- Trigger **alarm** and **servo** to close a window or notify guardians.
+This project combines **Computer Vision (YOLOv8)** with **IoT (Arduino)** to:
+- Detect children near windows/balconies.
+- Detect sharp objects (e.g., knife, scissors).
+- Trigger Arduino **servo + buzzer** to close the window or raise an alarm.
+- Provide an **easy-to-use GUI (Streamlit)** for image-based testing.
 
-> Intended for **education and prototyping**. Not a certified safety device.
+⚠️ **Note:** This is for educational and prototyping purposes only. It is not a certified safety device.
 
 ---
 
 ## ✨ Features
-- Real-time video inference using **YOLOv8**.
-- Hardware control: **Ultrasonic** distance sensing, **Buzzer** alarm, **Servo** actuation.
-- Serial integration: AI → Arduino to trigger actions (`'1'` close / `'0'` open).
-- Optional **GUI (Streamlit)** and **Jupyter Notebook** demo.
-- Clear, modular repo structure ready for GitHub.
+- Real-time detection with **YOLOv8**.  
+- Simple web GUI built with **Streamlit** (no camera required).  
+- Upload an image → get detection results instantly.  
+- Bounding boxes drawn on the image.  
+- Object list with confidence scores.  
 
 ---
 
 ## 🎬 Demo
-- **GIF:**  
-  `![Demo](results/demo.gif)`
-- **Screenshots:**  
-  ![Detection](<img width="645" height="448" alt="metrics" src="https://github.com/user-attachments/assets/f255c836-7810-4439-bb55-88db43e09404" />
-)
+- **Sample Detection**  
+  ![Sample Detection](results/sample.jpg)
+
+- **Confusion Matrix**  
+  ![Confusion Matrix](project_results/confusion_matrix.png)
 
 ---
 
-## 🗂 Project Structure
+## 🖼 GUI
+A lightweight GUI built with **Streamlit**:  
+
+- Upload an image (JPG/PNG).  
+- The AI model processes it with YOLOv8.  
+- The system returns the annotated image + detected objects.  
+
+Example interface:  
+![GUI Demo](results/gui_demo.png)
+
+---
+
+## 🚀 Quick Start
+
+### 1) Clone & Install
+```bash
+git clone https://github.com/Ahmed-3411/Protect-Your-Children.git
+cd Protect-Your-Children
+pip install -r requirements.txt

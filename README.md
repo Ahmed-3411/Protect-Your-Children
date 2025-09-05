@@ -46,8 +46,6 @@ This project combines **Computer Vision (YOLOv8)** with **IoT (Arduino)** to:
 ---
 
 ## 🎬 Results
-- **Sample Detection**  
-  ![Sample Detection](results/sample.jpg)
 
 - **Confusion Matrix**  
   ![Confusion Matrix](project_results/confusion_matrix.png)

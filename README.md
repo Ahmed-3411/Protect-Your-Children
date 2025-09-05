@@ -15,10 +15,12 @@
 ## 📑 Table of Contents
 - [Overview](#-overview)
 - [Features](#-features)
-- [Demo](#-demo)
+- [Results](#-results)
 - [GUI](#-gui)
 - [Quick Start](#-quick-start)
 - [Project Structure](#-project-structure)
+- [Python Code (AI)](#-python-code-ai)
+- [Arduino Code (IoT)](#-arduino-code-iot)
 - [Requirements](#-requirements)
 - [Authors](#-authors)
 - [License](#-license)
@@ -45,20 +47,18 @@ This project combines **Computer Vision (YOLOv8)** with **IoT (Arduino)** to:
 
 ---
 
-## 🎬 Result
+## 🎬 Results
 - **Sample Detection**  
   ![Sample Detection](results/sample.jpg)
 
 - **Confusion Matrix**  
   ![Confusion Matrix](project_results/confusion_matrix.png)
 
-  **Correct VS Incorrect Prredictions**
-  ![Correct VS Incorrect](project_results/correct_vs_incorrect.png)
+- **Correct vs Incorrect Predictions**  
+  ![Correct vs Incorrect](project_results/correct_vs_incorrect.png)
 
-  **Model Perfomance metrics**
+- **Model Performance Metrics**  
   ![metrics](project_results/metrics.png)
-
-  
 
 ---
 
@@ -81,50 +81,3 @@ Example interface:
 git clone https://github.com/Ahmed-3411/Protect-Your-Children.git
 cd Protect-Your-Children
 pip install -r requirements.txt
-
-
-# ai/child_safety_ai.py
-import cv2
-import serial
-from ultralytics import YOLO
-
-# Load YOLOv8 model
-model = YOLO("model/yolov8n.pt")
-
-# Connect to Arduino (update COM port or /dev/ttyUSB0 for Linux)
-arduino = serial.Serial(port="COM3", baudrate=9600, timeout=1)
-
-# Start webcam
-cap = cv2.VideoCapture(0)
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-
-    results = model(frame)
-    annotated = results[0].plot()
-
-    # Check detections
-    danger = False
-    for box in results[0].boxes:
-        cls = int(box.cls[0])
-        label = model.names[cls]
-        if label in ["person", "knife", "scissors"]:
-            danger = True
-
-    # Send signal to Arduino
-    if danger:
-        arduino.write(b'1')  # Close window / trigger buzzer
-    else:
-        arduino.write(b'0')
-
-    cv2.imshow("Protect Your Children", annotated)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
-
-ي
-يي

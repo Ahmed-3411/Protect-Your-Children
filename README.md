@@ -81,3 +81,110 @@ Example interface:
 git clone https://github.com/Ahmed-3411/Protect-Your-Children.git
 cd Protect-Your-Children
 pip install -r requirements.txt
+
+
+
+ProtectYourChildren/
+│── arduino/child_safety.ino        # Arduino firmware (servo + buzzer + ultrasonic)
+│── ai/child_safety_ai.py           # YOLOv8 real-time detection + serial comm
+│── gui/app.py                      # Streamlit GUI (upload images)
+│── model/yolov8n.pt                # YOLO weights (place here or download externally)
+│── results/sample.jpg
+│── project_results/confusion_matrix.png
+│── project_results/correct_vs_incorrect.png
+│── project_results/metrics.png
+│── requirements.txt
+│── README.md
+│── LICENSE
+
+
+# ai/child_safety_ai.py
+import cv2
+import serial
+from ultralytics import YOLO
+
+# Load YOLOv8 model
+model = YOLO("model/yolov8n.pt")
+
+# Connect to Arduino (update COM port or /dev/ttyUSB0 for Linux)
+arduino = serial.Serial(port="COM3", baudrate=9600, timeout=1)
+
+# Start webcam
+cap = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    results = model(frame)
+    annotated = results[0].plot()
+
+    # Check detections
+    danger = False
+    for box in results[0].boxes:
+        cls = int(box.cls[0])
+        label = model.names[cls]
+        if label in ["person", "knife", "scissors"]:
+            danger = True
+
+    # Send signal to Arduino
+    if danger:
+        arduino.write(b'1')  # Close window / trigger buzzer
+    else:
+        arduino.write(b'0')
+
+    cv2.imshow("Protect Your Children", annotated)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+
+
+
+// arduino/child_safety.ino
+#include <Servo.h>
+
+Servo myservo;
+int buzzer = 7;
+int servoPin = 6;
+
+void setup() {
+  Serial.begin(9600);
+  myservo.attach(servoPin);
+  pinMode(buzzer, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char signal = Serial.read();
+
+    if (signal == '1') {
+      // Danger detected → close window + buzzer
+      myservo.write(0);      // rotate servo to close
+      digitalWrite(buzzer, HIGH);
+      delay(500);
+      digitalWrite(buzzer, LOW);
+    } 
+    else if (signal == '0') {
+      // Safe → keep window open
+      myservo.write(90);     // neutral position
+      digitalWrite(buzzer, LOW);
+    }
+  }
+}
+
+
+
+streamlit
+ultralytics
+opencv-python
+pillow
+numpy
+pyserial
+
+
+👤 Authors
+Ahmed (Egypt) — AI & ML Developer

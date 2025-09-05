@@ -16,11 +16,10 @@
 - [Overview](#-overview)
 - [Features](#-features)
 - [Results](#-results)
-- [GUI](#-gui)
-- [Quick Start](#-quick-start)
 - [Project Structure](#-project-structure)
 - [Python Code (AI)](#-python-code-ai)
 - [Arduino Code (IoT)](#-arduino-code-iot)
+- [GUI Code](#-gui-code)
 - [Requirements](#-requirements)
 - [Authors](#-authors)
 - [License](#-license)
@@ -40,10 +39,10 @@ This project combines **Computer Vision (YOLOv8)** with **IoT (Arduino)** to:
 
 ## ✨ Features
 - Real-time detection with **YOLOv8**.  
-- Simple web GUI built with **Streamlit** (no camera required).  
-- Upload an image → get detection results instantly.  
+- Web GUI built with **Streamlit** (upload images).  
 - Bounding boxes drawn on the image.  
 - Object list with confidence scores.  
+- Arduino control for servo + buzzer.  
 
 ---
 
@@ -62,22 +61,25 @@ This project combines **Computer Vision (YOLOv8)** with **IoT (Arduino)** to:
 
 ---
 
-## 🖼 GUI
-A lightweight GUI built with **Streamlit**:  
+## 📁 Project Structure
+ProtectYourChildren/
+│── arduino/child_safety.ino # Arduino firmware (servo + buzzer + ultrasonic)
+│── ai/child_safety_ai.py # YOLOv8 real-time detection + serial comm
+│── gui/app.py # Streamlit GUI (upload images)
+│── model/yolov8n.pt # YOLO weights (not included; link externally)
+│── results/sample.jpg
+│── project_results/confusion_matrix.png
+│── project_results/correct_vs_incorrect.png
+│── project_results/metrics.png
+│── requirements.txt
+│── README.md
+│── LICENSE
 
-- Upload an image (JPG/PNG).  
-- The AI model processes it with YOLOv8.  
-- The system returns the annotated image + detected objects.  
-
-Example interface:  
-![GUI Demo](results/gui_demo.png)
 
 ---
 
-## 🚀 Quick Start
-
-
-##🐍 Python Code (AI)
+## 🐍 Python Code (AI)
+```python
 # ai/child_safety_ai.py
 import cv2
 import serial
@@ -122,23 +124,80 @@ cap.release()
 cv2.destroyAllWindows()
 
 
+---
 
+## 🛠 Arduino Code (IoT)
+```
+Arduino
+#include <Servo.h>
 
+#define TRIG 9
+#define ECHO 10
+#define BUZZER 7
+#define SERVO_PIN 6
 
+Servo windowServo;
 
+void setup() {
+  pinMode(TRIG, OUTPUT);
+  pinMode(ECHO, INPUT);
+  pinMode(BUZZER, OUTPUT);
+  windowServo.attach(SERVO_PIN);
+  windowServo.write(0);
+  Serial.begin(9600);
+}
 
+void loop() {
+  digitalWrite(TRIG, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG, LOW);
 
+  long duration = pulseIn(ECHO, HIGH);
+  int distance = duration * 0.034 / 2;
 
+  Serial.print("Distance: ");
+  Serial.println(distance);
 
+  if (distance < 30) {
+    digitalWrite(BUZZER, HIGH);
+    windowServo.write(90);
+    Serial.println("Warning: Child near window!");
+    delay(1000);
+  } else {
+    digitalWrite(BUZZER, LOW);
+    windowServo.write(0);
+  }
 
+  delay(200);
+}
 
+```GUI Code (Streamlit)
 
+import streamlit as st
+from PIL import Image
+from ai.child_safety_ai import model
 
+st.title("Protect Your Children — AI Safety System")
 
+uploaded_file = st.file_uploader("Upload an image", type=["jpg","png"])
+if uploaded_file:
+    image = Image.open(uploaded_file)
+    results = model(image)
+    annotated_image = results[0].plot()
+    st.image(annotated_image, caption="Detection Result", use_column_width=True)
 
-### 1) Clone & Install
-```bash
+```
+📋 Requirements
 
+opencv-python
+ultralytics
+streamlit
+pyserial
+Pillow
 
+```Author
+Ahmed Talaat
 
 

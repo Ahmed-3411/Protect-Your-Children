@@ -128,7 +128,7 @@ cv2.destroyAllWindows()
 ---
 
 ## 🛠 Arduino Code (IoT)
-```
+```C++
 Arduino
 #include <Servo.h>
 
@@ -190,7 +190,7 @@ if uploaded_file:
     st.image(annotated_image, caption="Detection Result", use_column_width=True)
 
 ```
-📋 Requirements
+## 📋 Requirements
 ```
 opencv-python
 ultralytics
@@ -199,7 +199,8 @@ pyserial
 Pillow
 ```
 ---
-##Author
+## Author
+```
 Ahmed Talaat
 ```
 

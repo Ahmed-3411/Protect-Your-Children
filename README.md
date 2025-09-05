@@ -58,10 +58,11 @@ This project combines **Computer Vision (YOLOv8)** with **IoT (Arduino)** to:
 
 - **Model Performance Metrics**  
   ![metrics](project_results/metrics.png)
-
+  
 ---
 
 ## 📁 Project Structure
+```
 ProtectYourChildren/
 │── arduino/child_safety.ino # Arduino firmware (servo + buzzer + ultrasonic)
 │── ai/child_safety_ai.py # YOLOv8 real-time detection + serial comm
@@ -74,7 +75,7 @@ ProtectYourChildren/
 │── requirements.txt
 │── README.md
 │── LICENSE
-
+```
 
 ---
 
@@ -190,14 +191,15 @@ if uploaded_file:
 
 ```
 📋 Requirements
-
+```
 opencv-python
 ultralytics
 streamlit
 pyserial
 Pillow
-
+```
+---
 ##Author
 Ahmed Talaat
-
+```
 

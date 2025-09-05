@@ -1,67 +1,49 @@
-# 🛡️ Protect Your Children — AI + IoT Child Safety System
+import streamlit as st
+from PIL import Image
+import numpy as np
 
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](#)
-[![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-0A0A0A?logo=ultralytics)](#)
-[![Arduino](https://img.shields.io/badge/Arduino-Mega-00979D?logo=arduino&logoColor=white)](#)
-[![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5C3EE8?logo=opencv&logoColor=white)](#)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Optional-FF4B4B?logo=streamlit&logoColor=white)](#)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+# YOLOv8 (Ultralytics)
+try:
+    from ultralytics import YOLO
+    model = YOLO("model/yolov8n.pt")  # تأكد إن الملف موجود أو عامل download_weights
+except Exception as e:
+    st.error("⚠️ لم يتم تحميل نموذج YOLOv8. تأكد من وجود الملف model/yolov8n.pt أو سكربت التحميل.")
+    model = None
 
-> **EN:** An intelligent safety system that detects children near windows or holding sharp objects and triggers alarms/actuators.  
-> **AR:** نظام ذكي لحماية الأطفال عبر الرؤية الحاسوبية والتحكم بالأجهزة (Arduino) لإطلاق تنبيه وإغلاق النافذة عند الاقتراب أو عند اكتشاف أداة حادة.
+# إعداد الصفحة
+st.set_page_config(
+    page_title="Protect Your Children",
+    page_icon="🛡️",
+    layout="centered"
+)
 
----
+st.title("🛡️ Protect Your Children — AI + IoT Child Safety System")
+st.write("نظام ذكي يعتمد على **YOLOv8 + Arduino** للكشف عن الأطفال في مناطق خطرة أو اكتشاف أدوات حادة.")
 
-## 📑 Table of Contents
-- [Overview](#-overview)
-- [Features](#-features)
-- [Demo](#-demo)
-- [Project Structure](#-project-structure)
-- [Hardware](#-hardware)
-- [Wiring (Arduino Mega)](#-wiring-arduino-mega)
-- [Software Requirements](#-software-requirements)
-- [Quick Start](#-quick-start)
-- [GUI (Optional)](#-gui-optional)
-- [Notebook Demo](#-notebook-demo)
-- [Model Weights & Dataset](#-model-weights--dataset)
-- [Training (Custom Data)](#-training-custom-data)
-- [Evaluation](#-evaluation)
-- [Troubleshooting](#-troubleshooting)
-- [Security & Privacy](#-security--privacy)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Authors](#-authors)
+# رفع صورة
+uploaded_file = st.file_uploader("📤 ارفع صورة (jpg, jpeg, png)", type=["jpg", "jpeg", "png"])
 
----
+if uploaded_file is not None:
+    # عرض الصورة الأصلية
+    img = Image.open(uploaded_file)
+    st.image(img, caption="📷 الصورة المرفوعة", use_column_width=True)
 
-## 🔎 Overview
-The project combines **AI (YOLOv8)** with **IoT (Arduino)** to:
-- Detect **children** near risky zones (e.g., windows, balconies).
-- Detect **sharp objects** (e.g., knife/scissors).
-- Trigger **alarm** and **servo** to close a window or notify guardians.
+    if model is not None:
+        # تشغيل النموذج
+        results = model.predict(np.array(img))
 
-> Intended for **education and prototyping**. Not a certified safety device.
+        # استخراج الصورة مع المربعات
+        annotated_img = results[0].plot()
 
----
+        st.image(annotated_img, caption="✅ النتيجة بعد الكشف", use_column_width=True)
 
-## ✨ Features
-- Real-time video inference using **YOLOv8**.
-- Hardware control: **Ultrasonic** distance sensing, **Buzzer** alarm, **Servo** actuation.
-- Serial integration: AI → Arduino to trigger actions (`'1'` close / `'0'` open).
-- Optional **GUI (Streamlit)** and **Jupyter Notebook** demo.
-- Clear, modular repo structure ready for GitHub.
+        # لو عايز تضيف تفاصيل إضافية
+        st.subheader("🔎 التفاصيل:")
+        for r in results[0].boxes:
+            cls = int(r.cls[0])
+            conf = float(r.conf[0])
+            st.write(f"- Detected: {model.names[cls]} (conf: {conf:.2f})")
 
----
-
-## 🎬 Demo
-Add your media under `results/` and reference them here:
-
-- **GIF:**  
-  ![Demo](results/demo.gif)
-- **Screenshots:**  
-  ![Detection](results/sample.jpg)
-
----
-
-## 🗂 Project Structure
+# تشغيل الكاميرا (اختياري)
+if st.button("🎥 افتح الكاميرا"):
+    st.write("⚠️ تشغيل الكاميرا غير مدعوم على Streamlit Cloud. استخدم محليًا فقط.")

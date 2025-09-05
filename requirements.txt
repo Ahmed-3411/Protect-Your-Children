@@ -1,11 +1,9 @@
-# ai/download_weights.py
-import os
-import gdown
-
-OUT = "model/yolov8n.pt"
-GDRIVE_ID = "YOUR_GOOGLE_DRIVE_FILE_ID"
-URL = f"https://drive.google.com/uc?id={GDRIVE_ID}"
-
-if not os.path.exists(OUT):
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    gdown.download(URL, OUT, quiet=False)
+ultralytics
+opencv-python
+pyserial
+streamlit
+Pillow
+matplotlib
+pandas
+gdown
+huggingface-hub

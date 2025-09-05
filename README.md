@@ -94,10 +94,3 @@ ProtectYourChildren/
 │── requirements.txt
 │── README.md
 │── LICENSE
-
-
-
-
-
-
-

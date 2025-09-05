@@ -2,8 +2,11 @@ ultralytics
 opencv-python
 pyserial
 streamlit
+torch
+torchvision
 Pillow
 matplotlib
 pandas
 gdown
 huggingface-hub
+

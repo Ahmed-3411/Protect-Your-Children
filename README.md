@@ -55,12 +55,11 @@ The project combines **AI (YOLOv8)** with **IoT (Arduino)** to:
 ---
 
 ## 🎬 Demo
-Add your media under `results/` and reference them here:
-
 - **GIF:**  
   `![Demo](results/demo.gif)`
 - **Screenshots:**  
-  `![Detection](results/sample.jpg)`
+  ![Detection](<img width="645" height="448" alt="metrics" src="https://github.com/user-attachments/assets/f255c836-7810-4439-bb55-88db43e09404" />
+)
 
 ---
 

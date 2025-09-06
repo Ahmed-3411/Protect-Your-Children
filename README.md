@@ -173,7 +173,7 @@ void loop() {
 ```
 ---
 
-## GUI Code
+##! GUI Code
 ```python
 
 import streamlit as st

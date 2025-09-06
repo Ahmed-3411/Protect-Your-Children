@@ -174,7 +174,7 @@ void loop() {
 ---
 
 ## GUI Code
-```GUI Code (Streamlit)
+```python
 
 import streamlit as st
 from PIL import Image

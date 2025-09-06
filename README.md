@@ -170,7 +170,10 @@ void loop() {
 
   delay(200);
 }
+```
+---
 
+## GUI Code
 ```GUI Code (Streamlit)
 
 import streamlit as st

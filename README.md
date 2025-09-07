@@ -20,7 +20,7 @@
 - [Arduino Code (IoT)](#-arduino-code-iot)
 - [GUI Code](#-gui-code)
 - [Requirements](#-requirements)
-- [Authors](#-authors)
+- [Author](#-author)
 
 ---
 

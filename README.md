@@ -21,7 +21,6 @@
 - [GUI Code](#-gui-code)
 - [Requirements](#-requirements)
 - [Authors](#-authors)
-- [License](#-license)
 
 ---
 

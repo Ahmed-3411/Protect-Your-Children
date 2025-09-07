@@ -86,7 +86,6 @@ ProtectYourChildren/
 │── project_results/metrics.png
 │── requirements.txt
 │── README.md
-│── LICENSE
 ```
 
 ---

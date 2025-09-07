@@ -45,6 +45,22 @@ This project combines **Computer Vision (YOLOv8)** with **IoT (Arduino)** to:
 
 ---
 
+## ⚙️ How It Works
+The AI model was trained on thousands of annotated images to distinguish between children and adults.
+It can also recognize potentially dangerous objects such as knives or scissors.
+When a child is detected near a risky zone (e.g., window, balcony) or holding a sharp object, the system sends a signal to the Arduino to trigger safety actions (alarm or servo).
+
+- **Sharp Object Detection**  
+  ![Sharp Object Detection](test/images/1.JPG)
+
+- **Sharp Object Detection**  
+  ![Sharp Object Detection](test/images/2.JPG)
+
+- **adults**  
+  ![adults](test/images/adult.JPG)
+
+---
+
 ## 🎬 Results
 
 - **Confusion Matrix**  

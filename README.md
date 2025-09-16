@@ -6,6 +6,7 @@
 [![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5C3EE8?logo=opencv&logoColor=white)](#)
 [![Streamlit](https://img.shields.io/badge/Streamlit-GUI-FF4B4B?logo=streamlit&logoColor=white)](#)
 [![Roboflow](https://img.shields.io/badge/Roboflow-Dataset%20Management-0A66C2?logo=roboflow&logoColor=white)](#)
+[![Deep Learning](https://img.shields.io/badge/Deep%20Learning-YOLO--based-FF6F00?logo=tensorflow&logoColor=white)](#)
 
 
 > **Protect Your Children** is an AI + IoT prototype that detects children near dangerous zones (e.g., windows, balconies) or holding sharp objects.  
